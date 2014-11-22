@@ -1,4 +1,5 @@
 (ns raspberrypi.core
+  (:require [raspberrypi.twitter :as tw])
   (:use clojure.java.shell))
 
 (defn gpio [& {:keys [operation pin value]
@@ -8,11 +9,11 @@
   (sh "gpio" operation pin value))
 
 (defn read-all []
-  "すべてのピンの状態を表示する"
+  "check all pin's state"
   (:out (gpio :operation "readall")))
 
 (defn talk! [txt]
-  (sh "AquesTalkPi" txt "|" "aplay"))
+  (with-sh-dir "AquesTalkPi" txt "|" "aplay"))
 
 (defprotocol IPIN
   (set-out! [this])
@@ -49,3 +50,7 @@
     (gpio :operation "read"
           :pin (:pin this))))
 
+(defn -main [& args]
+  (-> (tw/read-token)
+    tw/twitterstream
+    (tw/start! (tw/status-listener :on-status #(-> % .getText talk!)))))
