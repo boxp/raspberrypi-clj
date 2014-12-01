@@ -21,7 +21,7 @@
   (:out (gpio :operation "readall")))
 
 (defn talk! [txt]
-  (sh "sh" "-C" 
+  (sh "sh" "-c" 
     (str (get-home) "/AquesTalkPi " txt " | aplay")))
 
 (defprotocol IPIN
