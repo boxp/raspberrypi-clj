@@ -8,12 +8,21 @@
                     value ""]}]
   (sh "gpio" operation pin value))
 
+(defn get-home
+  "ホームディレクトリを取得"
+  []
+  (let [home (System/getenv "HOME")]
+    (if home
+      home
+      (System/getProperty "user.home"))))
+
 (defn read-all []
   "check all pin's state"
   (:out (gpio :operation "readall")))
 
 (defn talk! [txt]
-  (with-sh-dir "AquesTalkPi" txt "|" "aplay"))
+  (sh "sh" "-C" 
+    (str (get-home) "/AquesTalkPi" txt " | aplay")))
 
 (defprotocol IPIN
   (set-out! [this])
