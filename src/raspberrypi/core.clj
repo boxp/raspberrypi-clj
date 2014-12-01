@@ -28,8 +28,8 @@
   IPIN
   (set-out! [this]
     (gpio :operation "mode"
-          :pin (:pin this))
-          :value "out")
+          :pin (:pin this)
+          :value "out"))
   (set-in! [this]
     (gpio :operation "mode"
           :pin (:pin this)
