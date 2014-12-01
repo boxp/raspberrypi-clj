@@ -22,7 +22,7 @@
 
 (defn talk! [txt]
   (sh "sh" "-C" 
-    (str (get-home) "/AquesTalkPi" txt " | aplay")))
+    (str (get-home) "/AquesTalkPi " txt " | aplay")))
 
 (defprotocol IPIN
   (set-out! [this])
