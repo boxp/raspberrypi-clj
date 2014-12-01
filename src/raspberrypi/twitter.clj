@@ -70,7 +70,7 @@
 
 (defn reply
   [twitter status txt]
-  (as-> $ txt 
+  (as-> txt $
         (StatusUpdate. $) 
         (.inReplyToStatusId $ (.getId status)) 
         (.updateStatus twitter $)))
